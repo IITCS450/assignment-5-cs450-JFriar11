@@ -67,10 +67,10 @@ int main(void)
     tid_t c1 = thread_create(consumer, (void*)1);
     tid_t c2 = thread_create(consumer, (void*)2);
 
-    thread_join(p1);
-    thread_join(p2);
-    thread_join(c1);
-    thread_join(c2);
+    while(thread_join(p1) != 0) thread_yield();
+    while(thread_join(p2) != 0) thread_yield();
+    while(thread_join(c1) != 0) thread_yield();
+    while(thread_join(c2) != 0) thread_yield();
 
     printf(1, "\n=== test_pc results ===\n");
     printf(1, "total produced: %d (expected %d)\n", total_produced, TOTAL);
